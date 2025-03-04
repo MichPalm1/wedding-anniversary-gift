@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Frame</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #image-container {
+            display: block;
+            margin: 20px auto;
+            max-width: 80%;
+            height: auto;
+        }
+        #video-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="frame">
+        <img id="image-container" src="heart-flower.jpg" alt="Photo" />
+        <p>"With every petal that falls, my love for you grows stronger. Here's to a year of happiness and many more to come. Happy anniversary, my love." 🌹!</p>
+        <div id="video-container">
+            <video width="80%" controls>
+                <source src="https://drive.google.com/file/d/1VSdEk2fqofB5o2-VYyhpCGpkrpoiUUIv/view?usp=sharing" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // Change this function to trigger when QR is scanned or page is accessed
+        function showVideo() {
+            document.getElementById('image-container').style.display = 'none';
+            document.getElementById('video-container').style.display = 'block';
+        }
+
+        // Auto-show video for demonstration
+        window.onload = showVideo;
+    </script>
+</body>
+</html>
