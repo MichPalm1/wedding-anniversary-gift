@@ -1,10 +1,68 @@
-
-
-
-
-
-
-
-
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Anniversary Frame</title>
+    <style>
+        body {
+            font-family: "Microsoft Sans Serif", sans-serif;
+            text-align: center;
+            background: url('background-image.jpg') no-repeat center center;
+            background-size: 20cm 28cm;
+            overflow-y: auto;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        #frame {
+            width: 560px;
+            height: 560px;
+            border: 1px solid black;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #image-container img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        p {
+            color: white;
+            font-size: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        #blank-space {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <p>🌹"Happy first anniversary, my love." 🌹</p>
+        <div id="frame">
+            <div id="image-container">
+                <img src="heart-flowerz.jpg" alt="Photo">
+            </div>
+        </div>
+        <p>🌹  "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come."  🌹<br>🌹220🌹</p>
+        
+        <div id="blank-space"></div>
+    </div>
+</body>
+</html>
