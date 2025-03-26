@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Anniversary Frame</title>
+    <style>
+        :root {
+            --max-container-width: 800px; /* Adjust this to control max width */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: grid;
+            place-items: center;
+            background-color: black;
+        }
+
+        /* Main Container */
+        #main-container {
+            aspect-ratio: 20 / 26.5; 
+            width: 100%;
+            max-width: var(--max-container-width);
+            max-height: calc(var(--max-container-width) * (26.5 / 20));
+            position: relative;
+            background: url('background-flower.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* Ensure the content starts at the top */
+            padding: 1%;
+            overflow: hidden;
+        }
+
+        /* Text Styling */
+        p {
+            color: white;
+            font-size: 2.0vw;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1% 1%; /* Default padding for all paragraphs */
+            border-radius: 10px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            width: 60%;
+            margin: 0.5% 0;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Specific Targeting for the First Paragraph inside Main Container */
+        #main-container p:first-of-type {
+            width: 90%;
+        }
+
+        /* Push the paragraphs to the bottom */
+        #main-container p:last-child {
+            margin-top: auto; /* Push the last paragraph to the bottom */
+        }
+
+        /* Blank Space */
+        #blank-space {
+            height: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <p>🌹 "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come." 🌹<br>🌹220🌹</p>
+        <p>🌹"Happy first anniversary, my love." 🌹</p>
+        <div id="blank-space"></div>
+    </div>
+</body>
+</html>
