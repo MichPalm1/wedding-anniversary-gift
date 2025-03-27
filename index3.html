@@ -3,128 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Anniversary Frame</title>
-    <style>
-        :root {
-            --max-container-width: 800px; /* Adjust this to control max width */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            display: grid;
-            place-items: center;
-            background-color: black;
-        }
-
-        /* Main Container */
-        #main-container {
-            aspect-ratio: 20 / 26.5; 
-            width: 100%;
-            max-width: var(--max-container-width);
-            max-height: calc(var(--max-container-width) * (26.5 / 20));
-            position: relative;
-            background: url('background-flower.jpg') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1%; 
-            overflow: hidden;
-        }
-
-        /* Video Container */
-        #video-container {
-            width: 100%;
-            position: relative;
-
-        }
-
-        /* Video Styling */
-        #video-container video {
-            width: 100%;
-            border-radius: 10px;
-            height: auto;
-box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Play Button */
-        #play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8%;
-            height: 8%;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            font-size: 2.5vw;
-            text-align: center;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Text Styling */
-        p {
-            color: white;
-            font-size: 2.0vw;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 1% 1%; /* Default padding for all paragraphs */
-            border-radius: 10px;
-            backdrop-filter: blur(20px);
-            text-align: center;
-            width: 90%;
-            margin: 0.5% 0;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Specific Targeting for the First Paragraph inside Main Container */
-        #main-container p:first-of-type {
-         
-width: 60%;
-        }
-
-        /* Blank Space */
-        #blank-space {
-            height: 0%;
-        }
-    </style>
+    <title>AR Video Frame</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@AR.js/aframe/build/aframe-ar.js"></script>
 </head>
-<body>
-    <div id="main-container">
-        <p>🌹"Happy first anniversary, my love." 🌹</p>
+<body style="background: black; margin: 0;">
+    <!-- Static UI (QR code image) -->
+    <div id="main-container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <img src="qr-code(2).png" alt="QR Code" style="width: 200px;">
+        <p style="color: white;">Scan the QR code to see the magic!</p>
+    </div>
 
-        <!-- Video Container -->
-        <div id="video-container">
-            <video id="video" playsinline>
-                <source src="videoDancing.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <button id="play-button">▶</button>
-        </div>
+    <!-- AR Container (full-screen camera view) -->
+    <div id="ar-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+        <a-scene embedded arjs='sourceType: "webcam";'>
+            <!-- QR Code Tracker -->
+            <a-marker type='pattern' url='pattern-qr-code(2).patt'>
+                <!-- Portrait Frame Container -->
+                <a-entity 
+                    position="0 0 -1" 
+                    scale="0.5 0.5 1"
+                >
+                    <!-- Video Background -->
+                    <a-plane 
+                        width="2" 
+                        height="3" 
+                        color="#000" 
+                        material='src: #videoTexture;'
+                        position="0 0 0"
+                    ></a-plane>
 
-        <p>🌹 "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come." 🌹<br>🌹220🌹</p>
-        
-        <div id="blank-space"></div>
+                    <!-- Portrait Shape Mask (rounded rectangle) -->
+                    <a-plane 
+                        width="2" 
+                        height="3" 
+                        color="white" 
+                        material='shader: flat; opacity: 0.01;' 
+                        position="0 0 0.01"
+                        geometry__primitive="plane"
+                        geometry__segments-1="100"
+                        geometry__segments-2="100"
+                        geometry__radius="0.9"
+                        geometry__arc="Math.PI * 2"
+                    ></a-plane>
+                </a-entity>
+            </a-marker>
+            <a-camera></a-camera>
+
+            <!-- Video Texture -->
+            <video 
+                id="videoTexture" 
+                src="videoDancing.mp4" 
+                loop 
+                autoplay 
+                playsinline 
+                style="display: none;"
+            ></video>
+        </a-scene>
     </div>
 
     <script>
-        let video = document.getElementById('video');
-        let playButton = document.getElementById('play-button');
+        // Show AR when QR is detected
+        document.querySelector('a-marker').addEventListener('markerFound', (e) => {
+            document.getElementById('main-container').style.display = 'none';
+            document.getElementById('ar-container').style.display = 'block';
+        });
 
-        playButton.addEventListener('click', () => {
-            video.play();
-            playButton.style.display = 'none'; 
+        // Hide AR when QR is lost
+        document.querySelector('a-marker').addEventListener('markerLost', (e) => {
+            document.getElementById('main-container').style.display = 'flex';
+            document.getElementById('ar-container').style.display = 'none';
+        });
+
+        // Prevent default QR code navigation
+        document.querySelector('a-marker').addEventListener('markerFound', (e) => {
+            e.preventDefault();
         });
     </script>
 </body>
