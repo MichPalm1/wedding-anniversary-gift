@@ -65,6 +65,7 @@
     <script>
         // Show AR when QR is detected
         document.querySelector('a-marker').addEventListener('markerFound', (e) => {
+            e.preventDefault(); // Prevents default QR code actions (e.g., URL navigation)
             document.getElementById('main-container').style.display = 'none';
             document.getElementById('ar-container').style.display = 'block';
         });
