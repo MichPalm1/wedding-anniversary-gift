@@ -6,7 +6,7 @@
     <title>Interactive Anniversary Frame</title>
     <style>
         :root {
-            --max-container-width: 800px; /* Adjust this to control max width */
+            --max-container-width: 800px;
         }
 
         * {
@@ -24,7 +24,7 @@
 
         /* Main Container */
         #main-container {
-            aspect-ratio: 20 / 26.5; 
+            aspect-ratio: 20 / 26.5;
             width: 100%;
             max-width: var(--max-container-width);
             max-height: calc(var(--max-container-width) * (26.5 / 20));
@@ -35,7 +35,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 1%; 
+            padding: 1%;
             overflow: hidden;
         }
 
@@ -43,7 +43,6 @@
         #video-container {
             width: 100%;
             position: relative;
-
         }
 
         /* Video Styling */
@@ -51,7 +50,7 @@
             width: 100%;
             border-radius: 10px;
             height: auto;
-box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
+            box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
         }
 
         /* Play Button */
@@ -79,7 +78,7 @@ box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
             color: white;
             font-size: 2.0vw;
             background: rgba(0, 0, 0, 0.7);
-            padding: 1% 1%; /* Default padding for all paragraphs */
+            padding: 1% 1%;
             border-radius: 10px;
             backdrop-filter: blur(20px);
             text-align: center;
@@ -90,8 +89,7 @@ box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
 
         /* Specific Targeting for the First Paragraph inside Main Container */
         #main-container p:first-of-type {
-         
-width: 60%;
+            width: 60%;
         }
 
         /* Blank Space */
@@ -114,17 +112,31 @@ width: 60%;
         </div>
 
         <p>🌹 "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come." 🌹<br>🌹220🌹</p>
-        
+
         <div id="blank-space"></div>
     </div>
 
     <script>
-        let video = document.getElementById('video');
-        let playButton = document.getElementById('play-button');
+        document.addEventListener("DOMContentLoaded", () => {
+            let video = document.getElementById('video');
+            let playButton = document.getElementById('play-button');
 
-        playButton.addEventListener('click', () => {
-            video.play();
-            playButton.style.display = 'none'; 
+            playButton.addEventListener('click', () => {
+                video.play();
+                playButton.style.display = 'none';
+
+                // Request Fullscreen Mode
+                let elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { // Firefox
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { // IE/Edge
+                    elem.msRequestFullscreen();
+                }
+            });
         });
     </script>
 </body>
