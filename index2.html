@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
     <title>Interactive Anniversary Frame</title>
     <style>
         :root {
@@ -10,10 +10,10 @@
         }
 
         html, body {
-            height: 100%;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            height: 100%;
+            overflow: hidden;
             background-color: black;
         }
 
@@ -25,7 +25,7 @@
 
         /* Main Container */
         #main-container {
-            aspect-ratio: 20 / 26.5; /* Maintain 20cm:26.5cm aspect ratio */
+            aspect-ratio: 20 / 26.5;
             width: 100%;
             max-width: var(--max-container-width);
             max-height: calc(var(--max-container-width) * (26.5 / 20));
@@ -35,7 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center vertically */
+            justify-content: center;
             padding: 1%;
             overflow: hidden;
         }
@@ -44,7 +44,7 @@
         #video-container {
             width: 100%;
             position: relative;
-            margin: 20px 0; /* Space around video */
+            margin: 20px 0;
         }
 
         /* Video Styling */
@@ -77,7 +77,7 @@
         /* Text Styling */
         p {
             color: white;
-            font-size: 3.0vw;
+            font-size: 2.0vw;
             background: rgba(0, 0, 0, 0.7);
             padding: 1% 1%;
             border-radius: 10px;
@@ -88,7 +88,11 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         }
 
-       
+        /* First Paragraph */
+        #main-container p:first-of-type {
+            width: 60%;
+            margin: 0 auto 20px auto;
+        }
 
         /* Blank Space */
         #blank-space {
@@ -98,6 +102,7 @@
 </head>
 <body>
     <div id="main-container">
+        <p>🌹"Happy first anniversary, my love." 🌹</p>
 
         <!-- Video Container -->
         <div id="video-container">
@@ -108,7 +113,7 @@
             <button id="play-button">▶</button>
         </div>
 
-        <p> "With every petal that falls, my love for you grows stronger,<br> Here's to a year of happiness and many more to come"<br> 🌹Happy first anniversary, my love🌹<br>🌹220🌹</p>
+        <p>🌹 "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come." 🌹<br>🌹220🌹</p>
         
         <div id="blank-space"></div>
     </div>
@@ -116,10 +121,35 @@
     <script>
         let video = document.getElementById('video');
         let playButton = document.getElementById('play-button');
+        let mainContainer = document.getElementById('main-container');
 
         playButton.addEventListener('click', () => {
             video.play();
             playButton.style.display = 'none';
+            
+            // Enter fullscreen mode on mobile
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        });
+
+        // Optional: Exit fullscreen when video ends
+        video.addEventListener('ended', () => {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         });
     </script>
 </body>
