@@ -2,29 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Anniversary Frame</title>
     <style>
         :root {
             --max-container-width: 800px;
         }
 
-        * {
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-color: black;
         }
 
         body {
-            margin: 0;
-            display: grid;
-            place-items: center;
-            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Main Container */
         #main-container {
-            aspect-ratio: 20 / 26.5;
+            aspect-ratio: 20 / 26.5; /* Maintain 20cm:26.5cm aspect ratio */
             width: 100%;
             max-width: var(--max-container-width);
             max-height: calc(var(--max-container-width) * (26.5 / 20));
@@ -34,7 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Center vertically */
             padding: 1%;
             overflow: hidden;
         }
@@ -43,6 +44,7 @@
         #video-container {
             width: 100%;
             position: relative;
+            margin: 20px 0; /* Space around video */
         }
 
         /* Video Styling */
@@ -50,7 +52,7 @@
             width: 100%;
             border-radius: 10px;
             height: auto;
-            box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.7);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7);
         }
 
         /* Play Button */
@@ -64,13 +66,12 @@
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             font-size: 2.5vw;
-            text-align: center;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
         /* Text Styling */
@@ -83,12 +84,14 @@
             backdrop-filter: blur(20px);
             text-align: center;
             width: 90%;
-            margin: 0.5% 0;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+            margin: 10px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         }
 
+        /* First Paragraph */
         #main-container p:first-of-type {
             width: 60%;
+            margin: 0 auto 20px auto;
         }
 
         /* Blank Space */
@@ -103,7 +106,7 @@
 
         <!-- Video Container -->
         <div id="video-container">
-            <video id="video" playsinline controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture>
+            <video id="video" playsinline>
                 <source src="videoDancing.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -118,24 +121,10 @@
     <script>
         let video = document.getElementById('video');
         let playButton = document.getElementById('play-button');
-        let mainContainer = document.getElementById('main-container');
 
         playButton.addEventListener('click', () => {
             video.play();
             playButton.style.display = 'none';
-            
-            // Enter fullscreen mode on mobile
-            if (document.fullscreenEnabled) {
-                mainContainer.requestFullscreen()
-                    .catch(() => console.log('Fullscreen failed'));
-            }
-        });
-
-        // Exit fullscreen when video ends (optional)
-        video.addEventListener('ended', () => {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
         });
     </script>
 </body>
