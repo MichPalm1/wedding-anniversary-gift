@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
     <title>Interactive Anniversary Frame</title>
     <style>
         :root {
@@ -87,7 +87,6 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
         }
 
-        /* Specific Targeting for the First Paragraph inside Main Container */
         #main-container p:first-of-type {
             width: 60%;
         }
@@ -112,31 +111,31 @@
         </div>
 
         <p>🌹 "With every petal that falls, my love for you grows stronger.<br> Here's to a year of happiness and many more to come." 🌹<br>🌹220🌹</p>
-
+        
         <div id="blank-space"></div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let video = document.getElementById('video');
-            let playButton = document.getElementById('play-button');
+        let video = document.getElementById('video');
+        let playButton = document.getElementById('play-button');
+        let mainContainer = document.getElementById('main-container');
 
-            playButton.addEventListener('click', () => {
-                video.play();
-                playButton.style.display = 'none';
+        playButton.addEventListener('click', () => {
+            video.play();
+            playButton.style.display = 'none';
+            
+            // Enter fullscreen mode on mobile
+            if (document.fullscreenEnabled) {
+                mainContainer.requestFullscreen()
+                    .catch(() => console.log('Fullscreen failed'));
+            }
+        });
 
-                // Request Fullscreen Mode
-                let elem = document.documentElement;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.mozRequestFullScreen) { // Firefox
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { // IE/Edge
-                    elem.msRequestFullscreen();
-                }
-            });
+        // Exit fullscreen when video ends (optional)
+        video.addEventListener('ended', () => {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
         });
     </script>
 </body>
